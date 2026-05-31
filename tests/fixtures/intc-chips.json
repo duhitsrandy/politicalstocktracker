@@ -1,0 +1,16 @@
+{
+  "id": "intc-chips",
+  "description": "INTC government stake / semiconductor policy",
+  "input": {
+    "raw_text": "The administration is discussing an equity stake in Intel as part of CHIPS and semiconductor national security policy.",
+    "source_type": "white_house_release",
+    "speaker": "Donald Trump"
+  },
+  "expect": {
+    "must_include_tickers": ["INTC"],
+    "primary_ticker": "INTC",
+    "direction": "bullish",
+    "score_min": 45,
+    "score_max": 100
+  }
+}

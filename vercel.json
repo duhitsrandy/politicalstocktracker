@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/poll-whitehouse",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/poll-defense",
+      "schedule": "5 22 * * 1-5"
+    },
+    {
+      "path": "/api/cron/update-forward-returns",
+      "schedule": "0 * * * *"
+    }
+  ]
+}

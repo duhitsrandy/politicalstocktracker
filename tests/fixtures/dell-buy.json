@@ -1,0 +1,17 @@
+{
+  "id": "dell-buy",
+  "description": "DELL buy-like language",
+  "input": {
+    "raw_text": "Go out and buy a Dell. Dell Technologies is a fantastic company for AI infrastructure.",
+    "source_type": "white_house_remarks",
+    "speaker": "Donald Trump"
+  },
+  "expect": {
+    "must_include_tickers": ["DELL"],
+    "primary_ticker": "DELL",
+    "event_type": "buy_like_language",
+    "direction": "bullish",
+    "score_min": 50,
+    "score_max": 100
+  }
+}

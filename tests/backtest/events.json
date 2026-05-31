@@ -1,0 +1,392 @@
+[
+  {
+    "id": "bt-001",
+    "label_primary_ticker": "IBM",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-04-22",
+    "input": {
+      "raw_text": "IBM has done an incredible job on quantum. Arvind Krishna is doing tremendous work.",
+      "source_type": "white_house_remarks",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.012, "5_td": 0.028, "sector_5_td": 0.015 }
+  },
+  {
+    "id": "bt-002",
+    "label_primary_ticker": "DELL",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-03-15",
+    "input": {
+      "raw_text": "Go out and buy a Dell. Dell is a fantastic company.",
+      "source_type": "white_house_remarks",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.018, "5_td": 0.041, "sector_5_td": 0.012 }
+  },
+  {
+    "id": "bt-003",
+    "label_primary_ticker": "INTC",
+    "dictionary_asof": "2024-08-01",
+    "event_date": "2024-08-20",
+    "input": {
+      "raw_text": "Equity stake in Intel discussed under CHIPS national security semiconductor policy.",
+      "source_type": "white_house_release",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.025, "5_td": 0.055, "sector_5_td": 0.02 }
+  },
+  {
+    "id": "bt-004",
+    "label_primary_ticker": "AAPL",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-11-10",
+    "input": {
+      "raw_text": "Apple must pay a 25% tariff if iPhones are not built in America. Critical to national security.",
+      "source_type": "white_house_remarks",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "bearish",
+    "returns": { "next_close": -0.015, "5_td": -0.032, "sector_5_td": -0.008 }
+  },
+  {
+    "id": "bt-005",
+    "label_primary_ticker": "NVDA",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-10-05",
+    "input": {
+      "raw_text": "Export controls on advanced AI chips sold to China affect Nvidia and semiconductor national security.",
+      "source_type": "agency_release",
+      "speaker": "Commerce Department"
+    },
+    "realized_direction": "bearish",
+    "returns": { "next_close": -0.022, "5_td": -0.04, "sector_5_td": -0.018 }
+  },
+  {
+    "id": "bt-006",
+    "label_primary_ticker": "PLTR",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-06-12",
+    "input": {
+      "raw_text": "Palantir awarded $178M Pentagon contract for AI-enabled defense systems.",
+      "source_type": "defense_contract",
+      "speaker": "Department of Defense"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.031, "5_td": 0.048, "sector_5_td": 0.01 }
+  },
+  {
+    "id": "bt-007",
+    "label_primary_ticker": "LMT",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-05-20",
+    "input": {
+      "raw_text": "Lockheed Martin receives $245M contract award for missile defense procurement.",
+      "source_type": "defense_contract",
+      "speaker": "Department of Defense"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.008, "5_td": 0.015, "sector_5_td": 0.006 }
+  },
+  {
+    "id": "bt-008",
+    "label_primary_ticker": "TSM",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-09-18",
+    "input": {
+      "raw_text": "Tariff threat on Taiwan semiconductor imports and CHIPS policy discussion.",
+      "source_type": "white_house_remarks",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "mixed",
+    "returns": { "next_close": -0.01, "5_td": -0.02, "sector_5_td": -0.012 }
+  },
+  {
+    "id": "bt-009",
+    "label_primary_ticker": null,
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-07-01",
+    "input": {
+      "raw_text": "Local apple farmers expect strong harvest in Michigan.",
+      "source_type": "news_article",
+      "speaker": ""
+    },
+    "realized_direction": "neutral",
+    "returns": { "next_close": 0, "5_td": 0, "sector_5_td": 0 }
+  },
+  {
+    "id": "bt-010",
+    "label_primary_ticker": "AMD",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-04-10",
+    "input": {
+      "raw_text": "AMD praised for semiconductor leadership in AI infrastructure national security context.",
+      "source_type": "white_house_remarks",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.014, "5_td": 0.03, "sector_5_td": 0.018 }
+  },
+  {
+    "id": "bt-011",
+    "label_primary_ticker": "MSFT",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-02-14",
+    "input": {
+      "raw_text": "Antitrust investigation into Microsoft cloud practices announced.",
+      "source_type": "agency_release",
+      "speaker": "FTC"
+    },
+    "realized_direction": "bearish",
+    "returns": { "next_close": -0.012, "5_td": -0.025, "sector_5_td": -0.005 }
+  },
+  {
+    "id": "bt-012",
+    "label_primary_ticker": "GOOGL",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-03-22",
+    "input": {
+      "raw_text": "Regulatory threat and antitrust scrutiny on Google search dominance.",
+      "source_type": "news_article",
+      "speaker": "DOJ"
+    },
+    "realized_direction": "bearish",
+    "returns": { "next_close": -0.018, "5_td": -0.035, "sector_5_td": -0.01 }
+  },
+  {
+    "id": "bt-013",
+    "label_primary_ticker": "COIN",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-11-25",
+    "input": {
+      "raw_text": "Crypto regulatory framework and sanction discussion affecting Coinbase.",
+      "source_type": "agency_release",
+      "speaker": "Treasury"
+    },
+    "realized_direction": "bearish",
+    "returns": { "next_close": -0.028, "5_td": -0.05, "sector_5_td": -0.015 }
+  },
+  {
+    "id": "bt-014",
+    "label_primary_ticker": "SMCI",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-05-08",
+    "input": {
+      "raw_text": "Super Micro praised for AI server infrastructure in federal IT context.",
+      "source_type": "white_house_remarks",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.042, "5_td": 0.08, "sector_5_td": 0.02 }
+  },
+  {
+    "id": "bt-015",
+    "label_primary_ticker": "IONQ",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-06-01",
+    "input": {
+      "raw_text": "Quantum computing national security initiative mentions IonQ and IBM.",
+      "source_type": "fact_sheet",
+      "speaker": "White House"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.035, "5_td": 0.06, "sector_5_td": 0.01 }
+  },
+  {
+    "id": "bt-016",
+    "label_primary_ticker": "CEG",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-07-15",
+    "input": {
+      "raw_text": "Nuclear energy funding grant for Constellation Energy data center power.",
+      "source_type": "agency_release",
+      "speaker": "Energy Department"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.02, "5_td": 0.038, "sector_5_td": 0.012 }
+  },
+  {
+    "id": "bt-017",
+    "label_primary_ticker": "MP",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-08-05",
+    "input": {
+      "raw_text": "Rare earth critical minerals policy and MP Materials strategic national security.",
+      "source_type": "executive_order",
+      "speaker": "White House"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.025, "5_td": 0.045, "sector_5_td": 0.008 }
+  },
+  {
+    "id": "bt-018",
+    "label_primary_ticker": "TSLA",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-10-20",
+    "input": {
+      "raw_text": "Tesla manufacturing and tariff discussion for EV production in America.",
+      "source_type": "white_house_remarks",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "mixed",
+    "returns": { "next_close": 0.005, "5_td": -0.01, "sector_5_td": 0.003 }
+  },
+  {
+    "id": "bt-019",
+    "label_primary_ticker": "RTX",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-04-30",
+    "input": {
+      "raw_text": "RTX contract modification for existing missile program, not a new award.",
+      "source_type": "defense_contract",
+      "speaker": "Department of Defense"
+    },
+    "realized_direction": "neutral",
+    "returns": { "next_close": 0.002, "5_td": 0.004, "sector_5_td": 0.003 }
+  },
+  {
+    "id": "bt-020",
+    "label_primary_ticker": "NVDA",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-05-25",
+    "input": {
+      "raw_text": "Nvidia CEO praised for AI chip leadership at White House dinner.",
+      "source_type": "white_house_remarks",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.022, "5_td": 0.05, "sector_5_td": 0.025 }
+  },
+  {
+    "id": "bt-021",
+    "label_primary_ticker": "INTC",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-01-20",
+    "input": {
+      "raw_text": "Generic sector optimism about technology without naming Intel.",
+      "source_type": "news_article",
+      "speaker": ""
+    },
+    "realized_direction": "neutral",
+    "returns": { "next_close": 0.003, "5_td": 0.005, "sector_5_td": 0.004 }
+  },
+  {
+    "id": "bt-022",
+    "label_primary_ticker": "DELL",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-09-05",
+    "input": {
+      "raw_text": "Echo article after Dell already rallied 20% on prior White House comment.",
+      "source_type": "news_article",
+      "speaker": ""
+    },
+    "realized_direction": "neutral",
+    "returns": { "next_close": -0.005, "5_td": -0.01, "sector_5_td": 0.002 }
+  },
+  {
+    "id": "bt-023",
+    "label_primary_ticker": "PLTR",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-08-28",
+    "input": {
+      "raw_text": "Palantir government contract for defense AI analytics platform award $95M.",
+      "source_type": "defense_contract",
+      "speaker": "Department of Defense"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.018, "5_td": 0.032, "sector_5_td": 0.008 }
+  },
+  {
+    "id": "bt-024",
+    "label_primary_ticker": "AMD",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-11-02",
+    "input": {
+      "raw_text": "Low relevance mention of chips in general policy speech without company names.",
+      "source_type": "white_house_remarks",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "neutral",
+    "returns": { "next_close": 0.001, "5_td": 0.002, "sector_5_td": 0.003 }
+  },
+  {
+    "id": "bt-025",
+    "label_primary_ticker": "IBM",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-12-01",
+    "input": {
+      "raw_text": "IBM federal IT contract award $120M for cloud modernization procurement.",
+      "source_type": "defense_contract",
+      "speaker": "Department of Defense"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.01, "5_td": 0.022, "sector_5_td": 0.006 }
+  },
+  {
+    "id": "bt-026",
+    "label_primary_ticker": "AAPL",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-02-28",
+    "input": {
+      "raw_text": "Apple praised for consumer innovation without policy catalyst language.",
+      "source_type": "white_house_remarks",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.006, "5_td": 0.01, "sector_5_td": 0.008 }
+  },
+  {
+    "id": "bt-027",
+    "label_primary_ticker": "NVDA",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-07-22",
+    "input": {
+      "raw_text": "Nvidia funding discussion under CHIPS Act grant program for domestic fabs.",
+      "source_type": "agency_release",
+      "speaker": "Commerce Department"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.028, "5_td": 0.055, "sector_5_td": 0.022 }
+  },
+  {
+    "id": "bt-028",
+    "label_primary_ticker": "OKLO",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-10-12",
+    "input": {
+      "raw_text": "Oklo SMR nuclear reactor licensing and Energy Department support.",
+      "source_type": "agency_release",
+      "speaker": "Energy Department"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.04, "5_td": 0.07, "sector_5_td": 0.01 }
+  },
+  {
+    "id": "bt-029",
+    "label_primary_ticker": "MSFT",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-06-18",
+    "input": {
+      "raw_text": "Microsoft Azure praised for federal AI cloud national security contract context.",
+      "source_type": "white_house_remarks",
+      "speaker": "Donald Trump"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.011, "5_td": 0.02, "sector_5_td": 0.009 }
+  },
+  {
+    "id": "bt-030",
+    "label_primary_ticker": "GOOGL",
+    "dictionary_asof": "2024-01-01",
+    "event_date": "2024-05-15",
+    "input": {
+      "raw_text": "Google quantum computing initiative mentioned in strategic technology policy.",
+      "source_type": "fact_sheet",
+      "speaker": "White House"
+    },
+    "realized_direction": "bullish",
+    "returns": { "next_close": 0.009, "5_td": 0.018, "sector_5_td": 0.007 }
+  }
+]

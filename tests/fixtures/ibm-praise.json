@@ -1,0 +1,18 @@
+{
+  "id": "ibm-praise",
+  "description": "IBM presidential praise",
+  "input": {
+    "raw_text": "IBM has done an incredible job on quantum computing. CEO Arvind Krishna is a tremendous leader.",
+    "source_type": "white_house_remarks",
+    "speaker": "Donald Trump",
+    "source_name": "White House"
+  },
+  "expect": {
+    "must_include_tickers": ["IBM"],
+    "primary_ticker": "IBM",
+    "event_type": "company_praise",
+    "direction": "bullish",
+    "score_min": 40,
+    "score_max": 100
+  }
+}

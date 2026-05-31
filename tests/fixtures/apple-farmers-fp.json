@@ -1,0 +1,14 @@
+{
+  "id": "apple-farmers-fp",
+  "description": "apple farmers false positive",
+  "input": {
+    "raw_text": "Local apple farmers in Michigan are expecting a strong harvest this fall.",
+    "source_type": "news_article",
+    "speaker": ""
+  },
+  "expect": {
+    "must_not_include_tickers": ["AAPL"],
+    "primary_ticker": null,
+    "score_max": 45
+  }
+}

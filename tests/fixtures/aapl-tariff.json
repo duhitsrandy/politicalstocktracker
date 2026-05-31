@@ -1,0 +1,17 @@
+{
+  "id": "aapl-tariff",
+  "description": "AAPL tariff threat",
+  "input": {
+    "raw_text": "Apple must pay a 25% tariff if it does not build iPhones in America. This is critical to national security and manufacturing.",
+    "source_type": "white_house_remarks",
+    "speaker": "Donald Trump"
+  },
+  "expect": {
+    "must_include_tickers": ["AAPL"],
+    "primary_ticker": "AAPL",
+    "event_type": "tariff_threat",
+    "direction": "bearish",
+    "score_min": 45,
+    "score_max": 100
+  }
+}

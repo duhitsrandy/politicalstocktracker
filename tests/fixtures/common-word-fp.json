@@ -1,0 +1,13 @@
+{
+  "id": "common-word-fp",
+  "description": "turn it ON now - must not resolve ON/NOW",
+  "input": {
+    "raw_text": "We need to turn it on now and move forward with the plan today.",
+    "source_type": "manual",
+    "speaker": ""
+  },
+  "expect": {
+    "must_not_include_tickers": ["ON", "NOW"],
+    "score_max": 35
+  }
+}
