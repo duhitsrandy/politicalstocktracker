@@ -20,6 +20,21 @@ Open [http://localhost:3000](http://localhost:3000) → Dashboard / Paste Event.
 | `npm run backtest` | Pre-registered backtest gate |
 | `npm run seed` | Seed `company_dictionary` to Supabase |
 
+## Finnhub (market quotes)
+
+1. Add your key to `.env.local`:
+   ```bash
+   FINNHUB_API_KEY=your_key_here
+   ```
+2. Verify the connection:
+   ```bash
+   npm run market:check
+   ```
+3. Restart the dev server (`npm run dev`).
+4. On **Paste Event**, **Analyze** or **Save** shows a market snapshot and uses `text_plus_market` scoring when a primary ticker is detected.
+
+Free tier rate limits apply; the app fetches one quote per analyze/save for the primary ticker.
+
 ## Environment
 
 Copy `.env.local.example` to `.env.local`.

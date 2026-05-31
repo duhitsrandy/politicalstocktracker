@@ -5,13 +5,27 @@ import type { AnalyzeResult, EventInput, Origin } from "@/lib/types/event";
 import { getSupabaseAdmin, isSupabaseConfigured } from "@/lib/db/supabase";
 import {
   localGetEvent,
-  localInsertEvent,
   localListEntities,
   localListEvents,
   localSaveEntities,
+  localUpsertEventBySourceHash,
   type LocalEventRow,
 } from "@/lib/db/local-store";
 import { SEED_COMPANIES } from "@/lib/data/seed-companies";
+
+function optionalText(value?: string | null): string | null {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : null;
+}
+
+/** Postgres timestamptz rejects ""; empty form fields must become a valid ISO timestamp or null. */
+function resolveEventDatetime(value?: string | null): string {
+  const trimmed = value?.trim();
+  if (!trimmed) return new Date().toISOString();
+  const parsed = new Date(trimmed);
+  if (Number.isNaN(parsed.getTime())) return new Date().toISOString();
+  return parsed.toISOString();
+}
 
 export function buildSourceHash(input: EventInput, normalizedText: string): string {
   const snippet = normalizedText.slice(0, 200);
@@ -89,16 +103,16 @@ export async function saveAnalyzedEvent(
   input: EventInput,
   analysis: AnalyzeResult,
   origin: Origin = "manual",
-): Promise<{ id: string }> {
+): Promise<{ id: string; updated: boolean }> {
   const source_hash = buildSourceHash(input, analysis.normalized_text);
   const row = {
-    event_datetime: input.event_datetime ?? new Date().toISOString(),
+    event_datetime: resolveEventDatetime(input.event_datetime),
     source_type: input.source_type,
-    source_name: input.source_name ?? null,
-    source_url: input.source_url ?? null,
+    source_name: optionalText(input.source_name),
+    source_url: optionalText(input.source_url),
     source_hash,
-    speaker: input.speaker ?? null,
-    title: input.title ?? null,
+    speaker: optionalText(input.speaker),
+    title: optionalText(input.title),
     raw_text: input.raw_text,
     normalized_text: analysis.normalized_text,
     event_type: analysis.classification.event_type,
@@ -122,28 +136,7 @@ export async function saveAnalyzedEvent(
     ai_summary: analysis.classification.summary,
   };
 
-  if (!isSupabaseConfigured()) {
-    const saved = await localInsertEvent({
-      ...row,
-      score_breakdown: { ...row.score_breakdown },
-    } as Omit<LocalEventRow, "id" | "detected_at">);
-    await localSaveEntities(
-      saved.id,
-      analysis.entities.map((e) => ({ ...e, event_id: saved.id })),
-    );
-    return { id: saved.id };
-  }
-
-  const db = getSupabaseAdmin();
-  const { data: event, error } = await db
-    .from("events")
-    .insert(row)
-    .select("id")
-    .single();
-  if (error) throw error;
-
   const entityRows = analysis.entities.map((e) => ({
-    event_id: event.id,
     entity_text: e.entity_text,
     entity_type: e.entity_type,
     company_name: e.company_name,
@@ -156,10 +149,44 @@ export async function saveAnalyzedEvent(
     is_sector_mention: e.is_sector_mention,
     is_primary: e.is_primary,
   }));
-  if (entityRows.length > 0) {
-    await db.from("event_entities").insert(entityRows);
+
+  if (!isSupabaseConfigured()) {
+    const { event: saved, updated } = await localUpsertEventBySourceHash({
+      ...row,
+      score_breakdown: { ...row.score_breakdown },
+    } as Omit<LocalEventRow, "id" | "detected_at">);
+    await localSaveEntities(
+      saved.id,
+      entityRows.map((e) => ({ ...e, event_id: saved.id })),
+    );
+    return { id: saved.id, updated };
   }
-  return { id: event.id };
+
+  const db = getSupabaseAdmin();
+  const { data: existing } = await db
+    .from("events")
+    .select("id")
+    .eq("source_hash", source_hash)
+    .maybeSingle();
+
+  const { data: event, error } = await db
+    .from("events")
+    .upsert(row, { onConflict: "source_hash" })
+    .select("id")
+    .single();
+  if (error) throw error;
+
+  const updated = Boolean(existing);
+
+  await db.from("event_entities").delete().eq("event_id", event.id);
+  if (entityRows.length > 0) {
+    const withEventId = entityRows.map((e) => ({ ...e, event_id: event.id }));
+    const { error: entityError } = await db
+      .from("event_entities")
+      .insert(withEventId);
+    if (entityError) throw entityError;
+  }
+  return { id: event.id, updated };
 }
 
 export async function loadCompanyDictionary() {

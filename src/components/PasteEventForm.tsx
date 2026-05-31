@@ -10,10 +10,15 @@ import type { AnalyzeResult, EventInput } from "@/lib/types/event";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { DirectionBadge } from "@/components/DirectionBadge";
 import { ReasonCodes } from "@/components/ReasonCodes";
+import { MarketSnapshotCard } from "@/components/MarketSnapshotCard";
 
 export function PasteEventForm() {
   const [pending, startTransition] = useTransition();
   const [result, setResult] = useState<AnalyzeResult | null>(null);
+  const [marketSnapshot, setMarketSnapshot] = useState<Record<
+    string,
+    unknown
+  > | null>(null);
   const [savedId, setSavedId] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -37,16 +42,37 @@ export function PasteEventForm() {
     startTransition(async () => {
       setMessage(null);
       setSavedId(null);
-      const analysis = await previewEventAction(buildInput());
+      const { analysis, marketSnapshot: snap } =
+        await previewEventAction(buildInput());
       setResult(analysis);
+      setMarketSnapshot(snap);
     });
   }
 
   function save() {
     startTransition(async () => {
-      const { eventId } = await saveEventAction(buildInput());
-      setSavedId(eventId ?? null);
-      setMessage(eventId ? `Saved event ${eventId}` : "Saved");
+      try {
+        const { eventId, eventUpdated, analysis, marketSnapshot: snap } =
+          await saveEventAction(buildInput());
+        setSavedId(eventId ?? null);
+        setResult(analysis);
+        setMarketSnapshot(snap);
+        if (eventId) {
+          setMessage(
+            eventUpdated
+              ? `Updated existing event (same text/URL).`
+              : `Saved new event.`,
+          );
+        } else {
+          setMessage("Saved");
+        }
+      } catch (err) {
+        const msg =
+          err instanceof Error
+            ? err.message
+            : "Save failed. If you already saved this text, open the dashboard.";
+        setMessage(msg);
+      }
     });
   }
 
@@ -173,6 +199,7 @@ export function PasteEventForm() {
             </pre>
           </div>
           <ReasonCodes codes={result.score.reason_codes} />
+          <MarketSnapshotCard snapshot={marketSnapshot} />
         </div>
       )}
     </div>

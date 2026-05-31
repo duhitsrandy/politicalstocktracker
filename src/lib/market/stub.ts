@@ -22,7 +22,7 @@ export function createStubMarketProvider(): MarketProvider {
 
 export async function getMarketProviderAsync(): Promise<MarketProvider> {
   if (process.env.FINNHUB_API_KEY) {
-    const { createFinnhubProvider } = await import("@/lib/market/finnhub");
+    const { createFinnhubProvider } = await import("@/lib/market/finnhub-provider");
     return createFinnhubProvider();
   }
   return createStubMarketProvider();

@@ -77,6 +77,31 @@ export async function localInsertEvent(
   return event;
 }
 
+export async function localUpsertEventBySourceHash(
+  row: Omit<LocalEventRow, "id" | "detected_at"> & { id?: string },
+): Promise<{ event: LocalEventRow; updated: boolean }> {
+  const all = await localListEvents();
+  const hash = row.source_hash;
+  const idx =
+    hash != null ? all.findIndex((e) => e.source_hash === hash) : -1;
+
+  if (idx >= 0) {
+    const existing = all[idx]!;
+    const event: LocalEventRow = {
+      ...existing,
+      ...row,
+      id: existing.id,
+      detected_at: existing.detected_at,
+    };
+    all[idx] = event;
+    await writeJson("events.json", all);
+    return { event, updated: true };
+  }
+
+  const event = await localInsertEvent(row);
+  return { event, updated: false };
+}
+
 export async function localListEntities(eventId: string) {
   const all = await readJson<Record<string, unknown[]>>(
     "event_entities.json",

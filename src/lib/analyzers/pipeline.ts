@@ -52,13 +52,15 @@ export async function runAnalyzePipeline(
   }
 
   let eventId: string | undefined;
+  let eventUpdated = false;
   if (options.save !== false) {
     const saved = await saveAnalyzedEvent(input, analysis, origin);
     eventId = saved.id;
+    eventUpdated = saved.updated;
     if (marketSnapshot && eventId) {
       await persistMarketSnapshot(eventId, marketSnapshot);
     }
-    if (primaryTicker && eventId) {
+    if (primaryTicker && eventId && !eventUpdated) {
       await scheduleForwardReturns(eventId, primaryTicker);
     }
     if (options.alert !== false && shouldAutoAlert(analysis, origin)) {
@@ -66,5 +68,5 @@ export async function runAnalyzePipeline(
     }
   }
 
-  return { analysis, eventId, marketSnapshot };
+  return { analysis, eventId, marketSnapshot, eventUpdated };
 }
