@@ -1,0 +1,25 @@
+# Hourly forward-return updates (not available on Vercel Hobby built-in crons).
+
+name: Cron — update forward returns
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update forward returns
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          VERCEL_APP_URL: ${{ secrets.VERCEL_APP_URL }}
+        run: |
+          if [ -z "$CRON_SECRET" ] || [ -z "$VERCEL_APP_URL" ]; then
+            echo "Set CRON_SECRET and VERCEL_APP_URL repository secrets."
+            exit 1
+          fi
+          curl -fsS \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${VERCEL_APP_URL%/}/api/cron/update-forward-returns"

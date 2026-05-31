@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/cron/poll-whitehouse",
-      "schedule": "*/15 * * * *"
+      "schedule": "0 8 * * *"
     },
     {
       "path": "/api/cron/poll-defense",
@@ -10,7 +10,7 @@
     },
     {
       "path": "/api/cron/update-forward-returns",
-      "schedule": "0 * * * *"
+      "schedule": "30 9 * * *"
     }
   ]
 }

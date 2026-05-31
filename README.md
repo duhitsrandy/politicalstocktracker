@@ -48,6 +48,25 @@ Without Supabase, events persist to `.data/` locally.
 3. **Persistence** — Supabase or local JSON store.
 4. **Market / alerts / cron** — Finnhub + Discord; Vercel crons when deployed.
 
+## Deploy on Vercel (Hobby)
+
+**Built-in crons:** Hobby allows each cron expression to run **at most once per day**. `vercel.json` uses daily schedules so deploy succeeds:
+
+| Route | Vercel schedule (UTC) |
+|-------|------------------------|
+| `/api/cron/poll-whitehouse` | 08:00 daily |
+| `/api/cron/poll-defense` | 22:05 Mon–Fri |
+| `/api/cron/update-forward-returns` | 09:30 daily |
+
+**Frequent polling (free):** For White House every ~15 minutes and forward returns hourly, enable GitHub Actions (see `.github/workflows/`). In the repo, add secrets:
+
+- `CRON_SECRET` — same value as on Vercel
+- `VERCEL_APP_URL` — production URL, e.g. `https://your-app.vercel.app`
+
+Set on Vercel: `ENABLE_SOURCE_POLLING=true`, Supabase keys, `FINNHUB_API_KEY`, `CRON_SECRET`.
+
+Pro plan: you can switch `vercel.json` back to `*/15 * * * *` and `0 * * * *` if you prefer Vercel-native crons only.
+
 ## Supabase setup
 
 1. Create a project at [supabase.com](https://supabase.com).

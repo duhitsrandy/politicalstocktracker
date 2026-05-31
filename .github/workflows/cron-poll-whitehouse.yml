@@ -1,0 +1,26 @@
+# Hobby Vercel crons are limited to once per day. Use this workflow for ~15 min polling.
+# Repo secrets: CRON_SECRET, VERCEL_APP_URL (e.g. https://your-app.vercel.app)
+
+name: Cron — poll White House
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Poll White House
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          VERCEL_APP_URL: ${{ secrets.VERCEL_APP_URL }}
+        run: |
+          if [ -z "$CRON_SECRET" ] || [ -z "$VERCEL_APP_URL" ]; then
+            echo "Set CRON_SECRET and VERCEL_APP_URL repository secrets."
+            exit 1
+          fi
+          curl -fsS \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${VERCEL_APP_URL%/}/api/cron/poll-whitehouse"
