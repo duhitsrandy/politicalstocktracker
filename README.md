@@ -58,12 +58,21 @@ Without Supabase, events persist to `.data/` locally.
 | `/api/cron/poll-defense` | 22:05 Mon–Fri |
 | `/api/cron/update-forward-returns` | 09:30 daily |
 
-**Frequent polling (free):** For White House every ~15 minutes and forward returns hourly, enable GitHub Actions (see `.github/workflows/`). In the repo, add secrets:
+**Frequent polling (free):** For White House every ~15 minutes and forward returns hourly, enable GitHub Actions (see `.github/workflows/`).
 
-- `CRON_SECRET` — same value as on Vercel
-- `VERCEL_APP_URL` — production URL, e.g. `https://your-app.vercel.app`
+1. On **Vercel** (Production env): set `CRON_SECRET` (long random string), `ENABLE_SOURCE_POLLING=true`, Supabase keys, `FINNHUB_API_KEY`.
+2. On **GitHub** → repo **Settings** → **Secrets and variables** → **Actions** → **New repository secret** (both required; workflows fail immediately if either is missing):
+   - `CRON_SECRET` — **exact same string** as Vercel Production
+   - `VERCEL_APP_URL` — production origin only, e.g. `https://politicalstocktracker.vercel.app` (no `/api/...` path)
 
-Set on Vercel: `ENABLE_SOURCE_POLLING=true`, Supabase keys, `FINNHUB_API_KEY`, `CRON_SECRET`.
+From your machine (replace values):
+
+```bash
+gh secret set CRON_SECRET -R duhitsrandy/politicalstocktracker
+gh secret set VERCEL_APP_URL -R duhitsrandy/politicalstocktracker
+```
+
+Then **Actions** → **Cron — poll White House** → **Run workflow** to verify.
 
 Pro plan: you can switch `vercel.json` back to `*/15 * * * *` and `0 * * * *` if you prefer Vercel-native crons only.
 

@@ -16,10 +16,21 @@ jobs:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
           VERCEL_APP_URL: ${{ secrets.VERCEL_APP_URL }}
         run: |
-          if [ -z "$CRON_SECRET" ] || [ -z "$VERCEL_APP_URL" ]; then
-            echo "Set CRON_SECRET and VERCEL_APP_URL repository secrets."
+          missing=""
+          [ -z "$CRON_SECRET" ] && missing="${missing} CRON_SECRET"
+          [ -z "$VERCEL_APP_URL" ] && missing="${missing} VERCEL_APP_URL"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing GitHub Actions repository secrets:${missing}"
+            echo "Add them at: Settings → Secrets and variables → Actions → New repository secret"
             exit 1
           fi
-          curl -fsS \
+          url="${VERCEL_APP_URL%/}/api/cron/update-forward-returns"
+          http_code=$(curl -sS -o /tmp/cron-body.txt -w "%{http_code}" \
             -H "Authorization: Bearer ${CRON_SECRET}" \
-            "${VERCEL_APP_URL%/}/api/cron/update-forward-returns"
+            "$url")
+          echo "HTTP ${http_code} from ${url}"
+          cat /tmp/cron-body.txt
+          if [ "$http_code" -lt 200 ] || [ "$http_code" -ge 300 ]; then
+            echo "::error::Cron request failed. Match CRON_SECRET with Vercel Production env."
+            exit 1
+          fi

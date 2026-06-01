@@ -17,10 +17,23 @@ jobs:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
           VERCEL_APP_URL: ${{ secrets.VERCEL_APP_URL }}
         run: |
-          if [ -z "$CRON_SECRET" ] || [ -z "$VERCEL_APP_URL" ]; then
-            echo "Set CRON_SECRET and VERCEL_APP_URL repository secrets."
+          missing=""
+          [ -z "$CRON_SECRET" ] && missing="${missing} CRON_SECRET"
+          [ -z "$VERCEL_APP_URL" ] && missing="${missing} VERCEL_APP_URL"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing GitHub Actions repository secrets:${missing}"
+            echo "Add them at: Settings → Secrets and variables → Actions → New repository secret"
+            echo "CRON_SECRET must match the value in Vercel → Project → Settings → Environment Variables (Production)."
+            echo "VERCEL_APP_URL is your production origin, e.g. https://politicalstocktracker.vercel.app (no trailing path)."
             exit 1
           fi
-          curl -fsS \
+          url="${VERCEL_APP_URL%/}/api/cron/poll-whitehouse"
+          http_code=$(curl -sS -o /tmp/cron-body.txt -w "%{http_code}" \
             -H "Authorization: Bearer ${CRON_SECRET}" \
-            "${VERCEL_APP_URL%/}/api/cron/poll-whitehouse"
+            "$url")
+          echo "HTTP ${http_code} from ${url}"
+          cat /tmp/cron-body.txt
+          if [ "$http_code" -lt 200 ] || [ "$http_code" -ge 300 ]; then
+            echo "::error::Cron request failed. Common fixes: match CRON_SECRET on Vercel, use production URL, set ENABLE_SOURCE_POLLING=true on Vercel."
+            exit 1
+          fi
