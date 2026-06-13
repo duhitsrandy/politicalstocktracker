@@ -2,6 +2,8 @@ import { listEvents } from "@/lib/db/queries";
 import { EventTable, type EventRow } from "@/components/EventTable";
 import { isSupabaseConfigured } from "@/lib/db/supabase";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const events = await listEvents({ limit: 100 });
   const rows: EventRow[] = events.map((e) => ({
