@@ -25,7 +25,7 @@ jobs:
             exit 1
           fi
           url="${VERCEL_APP_URL%/}/api/cron/update-forward-returns"
-          http_code=$(curl -sS -o /tmp/cron-body.txt -w "%{http_code}" \
+          http_code=$(curl -sS --max-time 120 -o /tmp/cron-body.txt -w "%{http_code}" \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "$url")
           echo "HTTP ${http_code} from ${url}"

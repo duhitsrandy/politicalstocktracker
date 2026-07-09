@@ -19,9 +19,17 @@ export function getSupabaseAdmin(): SupabaseClient {
   return admin;
 }
 
+function isValidHttpUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 export function isSupabaseConfigured(): boolean {
-  return Boolean(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  return Boolean(url && key && isValidHttpUrl(url));
 }

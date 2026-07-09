@@ -6,6 +6,14 @@ export async function GET(request: Request) {
   if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const result = await pollWhiteHouse();
-  return NextResponse.json(result);
+  try {
+    const result = await pollWhiteHouse();
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error("poll-whitehouse cron failed:", error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Cron failed" },
+      { status: 500 },
+    );
+  }
 }
