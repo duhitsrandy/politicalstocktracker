@@ -1,6 +1,8 @@
 import { listEvents, getPerformanceStats } from "@/lib/db/queries";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default async function PerformancePage({
   searchParams,
 }: {
@@ -18,11 +20,30 @@ export default async function PerformancePage({
           ? "backfill"
           : "live";
 
-  const stats = await getPerformanceStats(originFilter);
-  const events = await listEvents({
-    origin: originFilter,
-    limit: 200,
-  });
+  let stats: Awaited<ReturnType<typeof getPerformanceStats>> = {
+    total: 0,
+    urgent: 0,
+    avg_score: 0,
+    by_bucket: {},
+  };
+  let events: Awaited<ReturnType<typeof listEvents>> = [];
+  let loadError: string | null = null;
+
+  try {
+    [stats, events] = await Promise.all([
+      getPerformanceStats(originFilter),
+      listEvents({
+        origin: originFilter,
+        limit: 200,
+      }),
+    ]);
+  } catch (error) {
+    console.error("performance page load failed:", error);
+    loadError =
+      error instanceof Error
+        ? error.message
+        : "Failed to load performance data from the database.";
+  }
 
   const byType: Record<string, number> = {};
   const byDirection: Record<string, number> = {};
@@ -41,6 +62,12 @@ export default async function PerformancePage({
           Validation layer — default view is live events only.
         </p>
       </div>
+      {loadError ? (
+        <div className="rounded border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-100">
+          <p className="font-medium">Could not load performance data</p>
+          <p className="mt-1 opacity-90">{loadError}</p>
+        </div>
+      ) : null}
 
       <div className="flex gap-2 border-b border-zinc-200 dark:border-zinc-800">
         <TabLink href="/performance" active={activeTab === "live"}>
